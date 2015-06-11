@@ -27,8 +27,8 @@ data SolverReturn = SUCCESS
 
 
 data BonminResults =
-    BonminResults {   nodes :: Word
-                    , iterations :: Word
+    BonminResults {   iterations :: Word
+                    , nodes :: Word
                     , time :: Double
                     , bestObjective :: Maybe Double
                     , gap :: Maybe Double
@@ -38,42 +38,65 @@ data BonminResults =
 
 
 
--- parseLog :: FilePath -> BonminResults
--- parseLog filePath = error "todo"
+parseLog :: FilePath -> BonminResults
+parseLog filePath = error "todo"
 
-prefixParser :: Parser B.ByteString
+prefixParser :: Parser ()
 prefixParser = do
     string "Cbc"
-    Data.Attoparsec.Char8.takeWhile isDigit
+    Data.Attoparsec.Char8.take 4
     char 'I'
-    space
-    char 't'
-    takeByteString
+    return ()
 
 
-linePrefixParser :: Parser (Double, Double)
-linePrefixParser = do
-    ( string "Search completed - best objective " >>
+objectiveParser :: Parser (Double, Double)
+objectiveParser = do
+    ( string "Search completed - best objective" >> space >>
         do
-         bestObjective <- double
-         let gap = 0.0
-         return (bestObjective, gap) )
-    <|> (string "Partial search - best objective " >>
+         objective <- double
+         let bestPossible = 0.0
+         return (objective, bestPossible) )
+    <|> (string "Partial search - best objective" >> space >>
         do
-         bestObjective <- double
-         takeTill (\c -> (c == '-') || (isDigit c))
-         gap <- double
-         return (bestObjective, gap) )
+         objective <- double
+         takeTill (\c -> (isDigit c))
+         bestPossible <- double
+         return (objective, bestPossible) )
 
+iterationParser :: Parser Word
+iterationParser = do
+    takeTill (\c -> (isDigit c))
+    numIterations <- decimal
+    return numIterations
 
-
-
-nodeParser :: Parser Int
+nodeParser :: Parser Word
 nodeParser = do
-    string "and"
-    space
+    takeTill (\c -> (isDigit c))
     numNodes <- decimal
-    space
-    string "nodes"
     return numNodes
+
+timeParser :: Parser Double
+timeParser = do
+    takeTill (\c -> (isDigit c))
+    solutionTime <- double
+    return solutionTime
+
+checkInfeasible :: (Double, Double) -> (Maybe Double, Maybe Double)
+checkInfeasible (x,y) = (Just x, Just y)
+
+
+bonminResultsParser :: Parser BonminResults
+bonminResultsParser = do
+    prefixParser
+    space
+    (objective, bestPossible) <- objectiveParser
+    let (x, y) = checkInfeasible (objective, bestPossible)
+    iters <- iterationParser
+    numNodes <- nodeParser
+    solutionTime <- timeParser
+    return $ BonminResults iters numNodes solutionTime x y SUCCESS
+
+
+
+
 

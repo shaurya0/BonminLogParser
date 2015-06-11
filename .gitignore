@@ -13,5 +13,6 @@ cabal.config
 *.prof
 *.hp
 *.aux
+*tags*
 BonminLogParser.sublime-project
 BonminLogParser.sublime-workspace
