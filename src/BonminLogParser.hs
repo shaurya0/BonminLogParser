@@ -2,7 +2,7 @@
 
 module BonminLogParser where
 
-import Data.Attoparsec.Char8
+import Data.Attoparsec.ByteString.Char8
 import Data.Word
 import qualified Data.ByteString as B
 import Control.Applicative
@@ -44,7 +44,7 @@ parseLog filePath = error "todo"
 prefixParser :: Parser ()
 prefixParser = do
     string "Cbc"
-    Data.Attoparsec.Char8.take 4
+    Data.Attoparsec.ByteString.Char8.take 4
     char 'I'
     return ()
 

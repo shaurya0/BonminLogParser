@@ -14,5 +14,6 @@ cabal.config
 *.hp
 *.aux
 *tags*
+/data/sample_log2.txt
 BonminLogParser.sublime-project
 BonminLogParser.sublime-workspace
