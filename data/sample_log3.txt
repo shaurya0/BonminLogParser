@@ -1,0 +1,119 @@
+Bonmin 1.6 using Cbc 2.7.7 and Ipopt 3.10.2
+bonmin.solution_limit 1
+bonmin.time_limit 600
+
+do Heuristic FPump
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit http://projects.coin-or.org/Ipopt
+******************************************************************************
+
+NLP0012I
+              Num      Status      Obj             It       time                 Location
+NLP0014I             1         OPT -2.239892e-05        8 0
+solving feasibility problem
+solving feasibility problem
+-stall-
+solving feasibility problem
+solving feasibility problem
+-stall-
+solving feasibility problem
+solving feasibility problem
+-stall-
+solving feasibility problem
+-stall-
+solving feasibility problem
+solving feasibility problem
+-stall-
+solving feasibility problem
+solving feasibility problem
+-stall-
+solving feasibility problem
+solving feasibility problem
+new feasible solution found
+TOTAL TIME == 0.17
+NLP0014I            27         OPT 9259.9989       16 0.004
+NLP0012I
+              Num      Status      Obj             It       time                 Location
+NLP0014I             1         OPT 9259.9989       12 0.004001
+Cbc0012I Integer solution of 9259.9989 found by FPump after 0 iterations and 0 nodes (0.17 seconds)
+NLP0014I             2         OPT -2.239892e-05       14 0.004
+NLP0014I             3         OPT -2.239892e-05        9 0.004
+NLP0014I             4         OPT -2.239892e-05       13 0.004
+NLP0014I             5         OPT -2.239892e-05       19 0.008001
+NLP0014I             6         OPT -2.239892e-05       14 0.004
+NLP0014I             7         OPT -2.239892e-05        9 0.004
+NLP0014I             8         OPT -2.239892e-05       13 0.004001
+NLP0014I             9         OPT -2.239892e-05        9 0.004
+NLP0014I            10         OPT -2.239892e-05       13 0.004
+NLP0014I            11         OPT -2.239892e-05       10 0.004
+NLP0014I            12         OPT -2.239892e-05       14 0.004001
+NLP0014I            13         OPT -2.239892e-05       11 0.004
+NLP0014I            14         OPT -2.239892e-05       13 0.004
+NLP0014I            15         OPT -2.239892e-05       10 0.004
+NLP0014I            16         OPT -2.2398391e-05       19 0.008001
+NLP0014I            17         OPT -2.239892e-05       11 0.004
+NLP0014I            18         OPT -2.239892e-05        5 0
+NLP0014I            19         OPT 2159.9998       12 0.004
+NLP0014I            20         OPT -2.239892e-05        5 0.004001
+NLP0012I
+              Num      Status      Obj             It       time                 Location
+NLP0014I            21         OPT 2299.9998       11 0.004
+NLP0014I            22         OPT -2.239892e-05        5 0
+NLP0014I            23         OPT 1679.9997       11 0
+NLP0014I            24         OPT -2.239892e-05        5 0
+NLP0014I            25         OPT 1839.9998       11 0
+NLP0014I            26         OPT -2.239892e-05        5 0.004001
+NLP0014I            27         OPT 1149.9998       12 0
+NLP0014I            28         OPT -2.239892e-05        5 0
+NLP0014I            29         OPT 3299.9997       11 0.004
+NLP0014I            30         OPT -2.239892e-05        5 0.004
+NLP0014I            31         OPT 1149.9998       12 0.004
+NLP0014I            32         OPT -2.239892e-05        5 0
+NLP0014I            33         OPT 1839.9998       11 0.004001
+NLP0014I            34         OPT -2.239892e-05        5 0.004
+NLP0014I            35         OPT 1679.9997       11 0.004
+NLP0014I            36         OPT -2.239892e-05        5 0
+NLP0014I            37         OPT 3299.9997       11 0.004
+NLP0014I            38         OPT -2.239892e-05        5 0.004001
+NLP0014I            39         OPT 2299.9998       11 0.004
+NLP0014I            40         OPT -2.239892e-05        5 0
+NLP0012I
+              Num      Status      Obj             It       time                 Location
+NLP0014I            41         OPT 2159.9998       12 0.004
+NLP0014I            42         OPT -2.239892e-05        6 0
+NLP0014I            43         OPT 2069.9996       10 0.004001
+NLP0014I            44         OPT -2.239892e-05        6 0.004
+NLP0014I            45         OPT 3024.9995       11 0.004
+NLP0014I            46         OPT -2.239892e-05        6 0
+NLP0014I            47         OPT 2159.9996       10 0.004
+NLP0014I            48         OPT -2.239892e-05        6 0.004001
+NLP0014I            49         OPT 1839.9996       11 0.004
+NLP0014I            50         OPT -2.239892e-05        6 0
+NLP0014I            51         OPT 1919.9996       11 0.004
+NLP0014I            52         OPT -2.239892e-05        6 0.004
+NLP0014I            53         OPT 1379.9996       11 0.004001
+NLP0014I            54         OPT -2.239892e-05        6 0
+NLP0014I            55         OPT 3024.9995       11 0.004
+NLP0014I            56         OPT -2.239892e-05        6 0
+NLP0014I            57         OPT 1379.9996       11 0.004
+NLP0014I            58         OPT -2.239892e-05        6 0.004
+NLP0014I            59         OPT 1839.9996       11 0.004001
+NLP0014I            60         OPT -2.239892e-05        6 0
+NLP0012I
+              Num      Status      Obj             It       time                 Location
+NLP0014I            61         OPT 1919.9996       11 0.004
+NLP0014I            62         OPT -2.239892e-05        6 0.004
+NLP0014I            63         OPT 2069.9996       10 0.004
+NLP0014I            64         OPT -2.239892e-05        6 0
+NLP0014I            65         OPT 2159.9996       10 0.004001
+Cbc0019I Exiting on maximum solutions
+Cbc0005I Partial search - best objective 9259.9989 (best possible -2.239892e-05), took 0 iterations and 0 nodes (0.38 seconds)
+Cbc0032I Strong branching done 32 times (597 iterations), fathomed 0 nodes and fixed 0 variables
+Cbc0035I Maximum depth 0, 0 variables fixed on reduced cost
+
+bonmin: Optimization interupted on limit.
+
+    "Not finished"

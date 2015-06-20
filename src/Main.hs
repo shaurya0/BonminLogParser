@@ -14,9 +14,10 @@ filePath1 = "/home/shaurya/Development/BonminLogParser/data/sample_log.txt"
 filePath2 :: FilePath
 filePath2 = "/home/shaurya/Development/BonminLogParser/data/sample_log2.txt"
 
+filePath3 :: FilePath
+filePath3 = "/home/shaurya/Development/BonminLogParser/data/sample_log3.txt"
 
-testStr1 :: B.ByteString
-testStr1 = "Cbc0001I Search completed - best objective -1296.120707310983, took 70350 iterations and 2703 nodes (39.19 seconds)"
+
 
 getLastNLines :: B.ByteString -> Int -> [B.ByteString]
 getLastNLines contents n =
@@ -26,10 +27,13 @@ getLastNLines contents n =
 
 main :: IO()
 main = do
-    contents <- B.readFile filePath2
+    contents <- B.readFile filePath3
     let lastLines = reverse $ getLastNLines contents 10
     mapM_ B.putStrLn lastLines
-    let r =  map (parseOnly bonminResultsParser) lastLines
-    let u = rights r
-    putStrLn $ show u
+    let results =  map (parseOnly bonminResultsParser) lastLines
+    let retval = map (parseOnly bonminSolverReturnParser) lastLines
+    let u = head $ rights results
+    let t = head $ rights retval
+    let v = u {solverReturn =  t}
+    putStrLn $ show v
 

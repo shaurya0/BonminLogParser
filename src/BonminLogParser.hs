@@ -7,14 +7,6 @@ import Data.Word
 import qualified Data.ByteString as B
 import Control.Applicative
 
-        -- enum SolverReturn{
-        --     SUCCESS,
-        --     INFEASIBLE,
-        --     CONTINUOUS_UNBOUNDED,
-        --     LIMIT_EXCEEDED,
-        --     USER_INTERRUPT,
-        --     MINLP_ERROR};
-
 
 data SolverReturn = SUCCESS
                 | INFEASIBLE
@@ -36,11 +28,6 @@ data BonminResults =
                     } deriving (Show)
 
 
-
-
-parseLog :: FilePath -> BonminResults
-parseLog filePath = error "todo"
-
 prefixParser :: Parser ()
 prefixParser = do
     string "Cbc"
@@ -49,19 +36,32 @@ prefixParser = do
     return ()
 
 
-objectiveParser :: Parser (Double, Double)
+
+computeGap :: Double -> Double -> Double
+computeGap solution bestPossible = 100 * abs (bestPossible - solution) / bestPossible
+
+checkInfeasible :: Double -> Bool
+checkInfeasible objective =
+    if objective == 1.0e50
+    then True else False
+
+
+objectiveParser :: Parser (Maybe Double, Maybe Double)
 objectiveParser = do
     ( string "Search completed - best objective" >> space >>
         do
          objective <- double
-         let bestPossible = 0.0
-         return (objective, bestPossible) )
+         return (Just objective, Just 0.0) )
     <|> (string "Partial search - best objective" >> space >>
         do
          objective <- double
+         let infeasible = checkInfeasible objective
          takeTill (\c -> (isDigit c))
          bestPossible <- double
-         return (objective, bestPossible) )
+         if infeasible then return (Nothing, Nothing) else return (Just objective, Just $ computeGap objective bestPossible) )
+
+
+
 
 iterationParser :: Parser Word
 iterationParser = do
@@ -81,22 +81,28 @@ timeParser = do
     solutionTime <- double
     return solutionTime
 
-checkInfeasible :: (Double, Double) -> (Maybe Double, Maybe Double)
-checkInfeasible (x,y) = (Just x, Just y)
-
 
 bonminResultsParser :: Parser BonminResults
 bonminResultsParser = do
     prefixParser
     space
     (objective, bestPossible) <- objectiveParser
-    let (x, y) = checkInfeasible (objective, bestPossible)
     iters <- iterationParser
     numNodes <- nodeParser
     solutionTime <- timeParser
-    return $ BonminResults iters numNodes solutionTime x y SUCCESS
+    return $ BonminResults iters numNodes solutionTime objective bestPossible SUCCESS
 
 
+bonminSolverReturnParser :: Parser SolverReturn
+bonminSolverReturnParser = do
+    (string "bonmin: Optimal" >> return SUCCESS)
+    <|> (string "bonmin: Infeasible problem" >> return INFEASIBLE)
+    <|> (string "bonmin Continuous relaxation is unbounded." >> return CONTINUOUS_UNBOUNDED)
+    <|> (string "bonmin: Optimization interrupted on limit." >> return LIMIT_EXCEEDED)
+    <|> (string "bonmin: Optimization interupted on limit." >> return LIMIT_EXCEEDED)
+    <|> (string "bonmin: Optimization interrupted by user." >> return USER_INTERRUPT)
+    <|> (string "bonmin: Optimization interupted by user." >> return USER_INTERRUPT)
+    <|> (string "bonmin: Error encountered in optimization." >> return MINLP_ERROR)
 
 
 
