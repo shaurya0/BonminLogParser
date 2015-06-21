@@ -4,7 +4,6 @@ module BonminLogParser where
 
 import Data.Attoparsec.ByteString.Char8
 import Data.Word
-import qualified Data.ByteString as B
 import Control.Applicative
 
 
@@ -34,6 +33,7 @@ prefixParser = do
     Data.Attoparsec.ByteString.Char8.take 4
     char 'I'
     return ()
+
 
 
 
@@ -104,5 +104,6 @@ bonminSolverReturnParser = do
     <|> (string "bonmin: Optimization interupted by user." >> return USER_INTERRUPT)
     <|> (string "bonmin: Error encountered in optimization." >> return MINLP_ERROR)
 
-
-
+bonminLogParser :: Parser [BonminResults]
+bonminLogParser = do
+    many bonminResultsParser <* endOfLine
