@@ -3,27 +3,28 @@
 
 name:                BonminLogParser
 version:             0.1.0.0
-synopsis:            Log parser for Bonmin output
+-- synopsis:
 -- description:
 license:             MIT
 license-file:        LICENSE
-author:              shaurya
+author:              shaurya0
 maintainer:          shaur141@gmail.com
 -- copyright:
 -- category:
 build-type:          Simple
--- extra-source-files:
+extra-source-files:  README.md
 cabal-version:       >=1.10
 
 executable BonminLogParser
   main-is:             Main.hs
   -- other-modules:
-  -- other-extensions:
+  other-extensions:    OverloadedStrings, DeriveDataTypeable, RecordWildCards
   build-depends:       base >=4.6 && <4.7,
-                       attoparsec,
-                       bytestring,
-                       cmdargs,
-                       filepath,
-                       directory
+                       attoparsec >=0.12 && <0.13,
+                       bytestring >=0.10 && <0.11,
+                       cmdargs >=0.10 && <0.11,
+                       directory >=1.2 && <1.3,
+                       filepath >=1.3 && <1.4,
+                       cassava
   hs-source-dirs:      src
   default-language:    Haskell2010

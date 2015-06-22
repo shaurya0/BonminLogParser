@@ -1,11 +1,17 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module BonminLogParser where
+module BonminLogParser
+(
+    bonminResultsParser,
+    bonminSolverReturnParser,
+    BonminResults(..),
+    SolverReturn(..),
+) where
 
 import Data.Attoparsec.ByteString.Char8
 import Data.Word
 import Control.Applicative
-
+import qualified Data.Csv as C
 
 data SolverReturn = SUCCESS
                 | INFEASIBLE
@@ -103,7 +109,3 @@ bonminSolverReturnParser = do
     <|> (string "bonmin: Optimization interrupted by user." >> return USER_INTERRUPT)
     <|> (string "bonmin: Optimization interupted by user." >> return USER_INTERRUPT)
     <|> (string "bonmin: Error encountered in optimization." >> return MINLP_ERROR)
-
-bonminLogParser :: Parser [BonminResults]
-bonminLogParser = do
-    many bonminResultsParser <* endOfLine
