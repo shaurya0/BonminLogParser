@@ -1,4 +1,4 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
 
 module BonminLogParser
 (
@@ -12,6 +12,8 @@ import Data.Attoparsec.ByteString.Char8
 import Data.Word
 import Control.Applicative
 import qualified Data.Csv as C
+import qualified Data.Csv.Incremental as CI
+import GHC.Generics
 
 data SolverReturn = SUCCESS
                 | INFEASIBLE
@@ -19,18 +21,31 @@ data SolverReturn = SUCCESS
                 | LIMIT_EXCEEDED
                 | USER_INTERRUPT
                 | MINLP_ERROR
-                deriving (Show)
+                deriving (Show, Generic)
 
 
 
 data BonminResults =
-    BonminResults {   iterations :: Word
+    BonminResults {   problemName :: String
+                    , iterations :: Word
                     , nodes :: Word
                     , time :: Double
                     , bestObjective :: Maybe Double
                     , gap :: Maybe Double
                     , solverReturn :: SolverReturn
-                    } deriving (Show)
+                    } deriving (Show, Generic)
+
+instance C.ToField SolverReturn where
+    toField SUCCESS = "SUCCESS"
+    toField INFEASIBLE = "INFEASIBLE"
+    toField CONTINUOUS_UNBOUNDED = "CONTINUOUS_UNBOUNDED"
+    toField LIMIT_EXCEEDED = "LIMIT_EXCEEDED"
+    toField USER_INTERRUPT = "USER_INTERRUPT"
+    toField MINLP_ERROR = "MINLP_ERROR"
+
+instance C.ToRecord SolverReturn
+instance C.ToRecord BonminResults
+
 
 
 prefixParser :: Parser ()
@@ -88,15 +103,15 @@ timeParser = do
     return solutionTime
 
 
-bonminResultsParser :: Parser BonminResults
-bonminResultsParser = do
+bonminResultsParser :: String -> Parser BonminResults
+bonminResultsParser minlpName = do
     prefixParser
     space
     (objective, bestPossible) <- objectiveParser
     iters <- iterationParser
     numNodes <- nodeParser
     solutionTime <- timeParser
-    return $ BonminResults iters numNodes solutionTime objective bestPossible SUCCESS
+    return $ BonminResults minlpName iters numNodes solutionTime objective bestPossible SUCCESS
 
 
 bonminSolverReturnParser :: Parser SolverReturn

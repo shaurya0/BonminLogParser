@@ -16,6 +16,7 @@ import System.FilePath
 import System.Exit
 import Control.Monad (when)
 
+
 data MyOptions = MyOptions {inputFilePath :: FilePath, outputFilePath :: FilePath} deriving (Data, Typeable, Show, Eq)
 
 myProgOpts :: MyOptions
@@ -62,8 +63,10 @@ parseBonminLog :: FilePath -> IO (BonminResults)
 parseBonminLog filePath = do
     contents <- B.readFile filePath
     let lastLines = reverse $ getLastNLines contents 10
-    let results =  map (parseOnly bonminResultsParser) lastLines
+    let minlpName = (dropExtension . takeFileName) filePath
+    let results =  map (parseOnly (bonminResultsParser minlpName)) lastLines
     let retval = map (parseOnly bonminSolverReturnParser) lastLines
+    -- todo: check for failure on results
     let parsedResult = head $ rights results
     let parsedReturnValue = head $ rights retval
     let finalResults = parsedResult {solverReturn =  parsedReturnValue}
