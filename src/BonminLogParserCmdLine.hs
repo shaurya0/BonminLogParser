@@ -9,6 +9,8 @@ module BonminLogParserCmdLine
 import BonminLogParser
 import Data.Attoparsec.ByteString.Char8
 import qualified Data.ByteString.Char8 as B
+import qualified Data.ByteString.Lazy as LBS
+import qualified Data.Csv as C
 import Data.Either
 import System.Console.CmdArgs
 import System.Directory
@@ -57,6 +59,8 @@ optionHandler opts@MyOptions{..}  = do
     when (not fileExists) $ putStrLn ("the file " ++ inputFilePath ++  ": does not exist") >> exitWith (ExitFailure 1)
     when (not dirGood) $ putStrLn ("the directory of the outputfile " ++ outputFilePath ++  ": does not exist") >> exitWith (ExitFailure 1)
     results <- parseBonminLog inputFilePath
+    let csvOutput = (C.encode [results])
+    B.appendFile outputFilePath $ LBS.toStrict csvOutput
     putStrLn $ show results
 
 parseBonminLog :: FilePath -> IO (BonminResults)
@@ -71,3 +75,7 @@ parseBonminLog filePath = do
     let parsedReturnValue = head $ rights retval
     let finalResults = parsedResult {solverReturn =  parsedReturnValue}
     return finalResults
+
+
+wtf :: Int
+wtf = 42

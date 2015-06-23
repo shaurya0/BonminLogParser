@@ -35,6 +35,8 @@ data BonminResults =
                     , solverReturn :: SolverReturn
                     } deriving (Show, Generic)
 
+
+-- todo: get rid of copy pasting here
 instance C.ToField SolverReturn where
     toField SUCCESS = "SUCCESS"
     toField INFEASIBLE = "INFEASIBLE"

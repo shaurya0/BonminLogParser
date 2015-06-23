@@ -13,6 +13,8 @@ cabal.sandbox.config
 cabal.config
 *.prof
 *.hp
+.ghci
+*.csv
 *.aux
 *tags*
 /data/sample_log2.txt
