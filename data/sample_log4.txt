@@ -1,3 +1,0 @@
-Cbc0005I Partial search - best objective 9259.9989 (best possible -2.239892e-05), took 0 iterations and 0 nodes (0.38 seconds)
-Cbc0005I Partial search - best objective 9259.9989 (best possible -2.239892e-05), took 0 iterations and 0 nodes (0.38 seconds)
-Cbc0005I Partial search - best objective 9259.9989 (best possible -2.239892e-05), took 0 iterations and 0 nodes (0.38 seconds)

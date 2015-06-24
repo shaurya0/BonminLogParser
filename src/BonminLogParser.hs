@@ -12,7 +12,6 @@ import Data.Attoparsec.ByteString.Char8
 import Data.Word
 import Control.Applicative
 import qualified Data.Csv as C
-import qualified Data.Csv.Incremental as CI
 import GHC.Generics
 
 data SolverReturn = SUCCESS
@@ -64,22 +63,20 @@ computeGap :: Double -> Double -> Double
 computeGap solution bestPossible = 100 * abs (bestPossible - solution) / bestPossible
 
 checkInfeasible :: Double -> Bool
-checkInfeasible objective =
-    if objective == 1.0e50
-    then True else False
+checkInfeasible objective = objective == 1.0e50
 
 
 objectiveParser :: Parser (Maybe Double, Maybe Double)
-objectiveParser = do
-    ( string "Search completed - best objective" >> space >>
+objectiveParser =
+     string "Search completed - best objective" >> space >>
         do
          objective <- double
-         return (Just objective, Just 0.0) )
+         return (Just objective, Just 0.0)
     <|> (string "Partial search - best objective" >> space >>
         do
          objective <- double
          let infeasible = checkInfeasible objective
-         takeTill (\c -> (isDigit c))
+         takeTill isDigit
          bestPossible <- double
          if infeasible then return (Nothing, Nothing) else return (Just objective, Just $ computeGap objective bestPossible) )
 
@@ -88,21 +85,18 @@ objectiveParser = do
 
 iterationParser :: Parser Word
 iterationParser = do
-    takeTill (\c -> (isDigit c))
-    numIterations <- decimal
-    return numIterations
+    takeTill isDigit
+    decimal
 
 nodeParser :: Parser Word
 nodeParser = do
-    takeTill (\c -> (isDigit c))
-    numNodes <- decimal
-    return numNodes
+    takeTill isDigit
+    decimal
 
 timeParser :: Parser Double
 timeParser = do
-    takeTill (\c -> (isDigit c))
-    solutionTime <- double
-    return solutionTime
+    takeTill isDigit
+    double
 
 
 bonminResultsParser :: String -> Parser BonminResults
@@ -117,7 +111,7 @@ bonminResultsParser minlpName = do
 
 
 bonminSolverReturnParser :: Parser SolverReturn
-bonminSolverReturnParser = do
+bonminSolverReturnParser =
     (string "bonmin: Optimal" >> return SUCCESS)
     <|> (string "bonmin: Infeasible problem" >> return INFEASIBLE)
     <|> (string "bonmin Continuous relaxation is unbounded." >> return CONTINUOUS_UNBOUNDED)

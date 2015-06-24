@@ -16,7 +16,7 @@ import System.Console.CmdArgs
 import System.Directory
 import System.FilePath
 import System.Exit
-import Control.Monad (when)
+import Control.Monad (unless, when)
 
 
 data MyOptions = MyOptions {inputFilePath :: FilePath, outputFilePath :: FilePath} deriving (Data, Typeable, Show, Eq)
@@ -30,7 +30,7 @@ myProgOpts = MyOptions
 
 getOpts :: IO MyOptions
 getOpts  = cmdArgs $ myProgOpts
-    &= summary (_PROGRAM_INFO )
+    &= summary _PROGRAM_INFO
     &= help _PROGRAM_ABOUT
     &= helpArg [explicit, name "help", name "h"]
     &= program _PROGRAM_NAME
@@ -54,14 +54,13 @@ getLastNLines contents n =
 optionHandler :: MyOptions -> IO ()
 optionHandler opts@MyOptions{..}  = do
     fileExists <- doesFileExist inputFilePath
+    unless fileExists $ putStrLn ("the file " ++ inputFilePath ++  ": does not exist") >> exitWith (ExitFailure 1)
     let dir = takeDirectory outputFilePath
     dirGood <- doesDirectoryExist dir
-    when (not fileExists) $ putStrLn ("the file " ++ inputFilePath ++  ": does not exist") >> exitWith (ExitFailure 1)
-    when (not dirGood) $ putStrLn ("the directory of the outputfile " ++ outputFilePath ++  ": does not exist") >> exitWith (ExitFailure 1)
+    unless dirGood $ putStrLn ("the directory of the outputfile " ++ outputFilePath ++  ": does not exist") >> exitWith (ExitFailure 1)
     results <- parseBonminLog inputFilePath
-    let csvOutput = (C.encode [results])
+    let csvOutput = C.encode [results]
     B.appendFile outputFilePath $ LBS.toStrict csvOutput
-    putStrLn $ show results
 
 parseBonminLog :: FilePath -> IO (BonminResults)
 parseBonminLog filePath = do
@@ -70,12 +69,8 @@ parseBonminLog filePath = do
     let minlpName = (dropExtension . takeFileName) filePath
     let results =  map (parseOnly (bonminResultsParser minlpName)) lastLines
     let retval = map (parseOnly bonminSolverReturnParser) lastLines
-    -- todo: check for failure on results
-    let parsedResult = head $ rights results
-    let parsedReturnValue = head $ rights retval
-    let finalResults = parsedResult {solverReturn =  parsedReturnValue}
+    let parsedResult = rights results
+    let parsedReturnValue = rights retval
+    when (null parsedResult || null parsedReturnValue) $ putStrLn ("Failed to parse : " ++ filePath) >> exitWith (ExitFailure 1)
+    let finalResults = (head parsedResult) {solverReturn = head parsedReturnValue }
     return finalResults
-
-
-wtf :: Int
-wtf = 42

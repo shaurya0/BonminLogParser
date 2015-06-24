@@ -1,0 +1,116 @@
+Bonmin 1.7 using Cbc 2.8 and Ipopt 3.11
+bonmin.time_limit 7200
+
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit http://projects.coin-or.org/Ipopt
+******************************************************************************
+
+NLP0012I 
+              Num      Status      Obj             It       time                 Location
+NLP0014I             1         OPT 8600.8754       13 0.008
+NLP0014I             2         OPT 8600.8754        6 0.004001
+NLP0014I             3         OPT 8600.8754        7 0
+NLP0014I             4         OPT 8600.8754        6 0.004
+NLP0014I             5         OPT 8691.0676        9 0
+NLP0014I             6         OPT 8600.8754        6 0.004
+NLP0014I             7         OPT 8600.8754        7 0
+NLP0014I             8         OPT 8600.8754        6 0
+NLP0014I             9         OPT 8675.0296        9 0.004
+NLP0014I            10         OPT 8600.8754        6 0
+NLP0014I            11         OPT 9298.9975        9 0.004001
+NLP0014I            12         OPT 8600.8754        6 0.004
+NLP0014I            13         OPT 9322.8451       10 0
+NLP0014I            14         OPT 8600.8754        6 0.004
+NLP0014I            15         OPT 8698.2779        8 0.004
+NLP0014I            16         OPT 8600.8754        6 0
+NLP0014I            17         OPT 8600.8754        9 0.004001
+NLP0014I            18         OPT 8600.8754        6 0
+NLP0014I            19         OPT 9678.7424       13 0.004
+NLP0014I            20         OPT 8600.8754        6 0.004
+NLP0012I 
+              Num      Status      Obj             It       time                 Location
+NLP0014I            21         OPT 8847.3249       14 0.004
+NLP0014I            22         OPT 8600.8754        6 0
+NLP0014I            23         OPT 10434.398       14 0.004001
+NLP0014I            24         OPT 8600.8754        6 0.004
+NLP0014I            25         OPT 9633.036       13 0.004
+NLP0014I            26         OPT 8600.8754        6 0
+NLP0014I            27         OPT 10435.651        9 0
+NLP0014I            28         OPT 8600.8754        6 0
+NLP0014I            29         OPT 12664.881       10 0.004
+NLP0014I            30         OPT 8600.8754        6 0.004001
+NLP0014I            31         OPT 10576.079       15 0.004
+NLP0014I            32         OPT 8600.8754        6 0
+NLP0014I            33         OPT 13331.781       16 0.004
+NLP0014I            34         OPT 8600.8754        6 0
+NLP0014I            35         OPT 11548.986       12 0.004
+NLP0014I            36         OPT 8600.8754        6 0
+NLP0014I            37         OPT 18724.845       15 0
+NLP0014I            38         OPT 8600.8754        6 0.004001
+NLP0014I            39         OPT 17169.029       17 0.004
+NLP0014I            40         OPT 8600.8754        6 0.004
+NLP0012I 
+              Num      Status      Obj             It       time                 Location
+NLP0014I            41         OPT 14749.641       16 0.004
+NLP0014I            42         OPT 8600.8754        6 0
+NLP0014I            43         OPT 23169.24       14 0.004001
+NLP0014I            44         OPT 8600.8754        6 0.004
+NLP0014I            45         OPT 26142.767       22 0
+NLP0014I            46         OPT 8600.8754        6 0.004
+NLP0014I            47         OPT 23382.516       12 0.004
+NLP0014I            48         OPT 8600.8754        6 0
+NLP0014I            49         OPT 22189.675       18 0.008001
+Cbc0010I After 0 nodes, 0 on tree, 1e+50 best solution, best possible 8600.8754 (0.12 seconds)
+NLP0014I            50         OPT 8600.8754        6 0
+NLP0014I            51         OPT 26142.767       22 0.008
+NLP0014I            52         OPT 8600.8754        6 0
+NLP0014I            53         OPT 23169.24       14 0.004001
+NLP0014I            54         OPT 8600.8754        8 0.004
+NLP0014I            55         OPT 23382.516       12 0.004
+NLP0014I            56         OPT 8600.8754        8 0
+NLP0014I            57         OPT 22189.675       17 0.004
+NLP0014I            58         OPT 8600.8754        8 0
+NLP0014I            59         OPT 18724.845       15 0.004001
+NLP0014I            60         OPT 8600.8754        8 0.004
+NLP0012I 
+              Num      Status      Obj             It       time                 Location
+NLP0014I            61         OPT 17169.029       16 0.004
+NLP0014I            62         OPT 8600.8754        8 0.004
+NLP0014I            63         OPT 14749.641       16 0.004001
+NLP0014I            64         OPT 8600.8754        9 0.004
+NLP0014I            65         OPT 13331.781       15 0.004
+NLP0014I            66         OPT 8600.8754        9 0
+NLP0014I            67         OPT 12664.881       10 0
+NLP0014I            68         OPT 8600.8754        9 0.004
+NLP0014I            69         OPT 11548.986       12 0.004001
+NLP0014I            70         OPT 8600.8754        9 0.004
+NLP0014I            71         OPT 10576.079       13 0.004
+NLP0014I            72         OPT 8600.8754        9 0
+NLP0014I            73         OPT 10434.398       13 0.004
+NLP0014I            74         OPT 9678.7424       13 0.004001
+NLP0014I            75         OPT 10435.651       10 0.004
+NLP0014I            76         OPT 9776.145       11 0.004
+NLP0014I            77         OPT 11633.905       15 0.004
+NLP0014I            78         OPT 9776.145       11 0.004001
+NLP0014I            79         OPT 12544.86       15 0.004
+NLP0014I            80         OPT 9975.6616       12 0
+NLP0012I 
+              Num      Status      Obj             It       time                 Location
+NLP0014I            81         OPT 9859.6594       13 0
+NLP0014I            82         OPT 9859.6594       13 0.004
+NLP0014I            83         OPT 9859.6594       12 0.004001
+NLP0014I            84         OPT 9859.6594       13 0.004
+NLP0012I 
+              Num      Status      Obj             It       time                 Location
+NLP0014I             1         OPT 9859.6594        8 0.004
+Cbc0004I Integer solution of 9859.6594 found after 410 iterations and 35 nodes (0.24 seconds)
+Cbc0001I Search completed - best objective 9859.659440155576, took 410 iterations and 35 nodes (0.24 seconds)
+Cbc0032I Strong branching done 24 times (442 iterations), fathomed 0 nodes and fixed 0 variables
+Cbc0035I Maximum depth 17, 0 variables fixed on reduced cost
+
+bonmin: Optimal
+
+ 	"Finished"
