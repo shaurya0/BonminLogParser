@@ -53,13 +53,15 @@ getLastNLines contents n =
 
 optionHandler :: MyOptions -> IO ()
 optionHandler opts@MyOptions{..}  = do
-    fileExists <- doesFileExist inputFilePath
-    unless fileExists $ putStrLn ("the file " ++ inputFilePath ++  ": does not exist") >> exitWith (ExitFailure 1)
+    inputFileExists <- doesFileExist inputFilePath
+    unless inputFileExists $ putStrLn ("the file " ++ inputFilePath ++  ": does not exist") >> exitWith (ExitFailure 1)
     let dir = takeDirectory outputFilePath
     dirGood <- doesDirectoryExist dir
     unless dirGood $ putStrLn ("the directory of the outputfile " ++ outputFilePath ++  ": does not exist") >> exitWith (ExitFailure 1)
-    results <- parseBonminLog inputFilePath
-    let csvOutput = C.encode [results]
+    results_ <- parseBonminLog inputFilePath
+    let results = [results_]
+    outputFileExists <- doesFileExist outputFilePath
+    let csvOutput = if outputFileExists then C.encode results else C.encodeDefaultOrderedByName results
     B.appendFile outputFilePath $ LBS.toStrict csvOutput
 
 parseBonminLog :: FilePath -> IO (BonminResults)

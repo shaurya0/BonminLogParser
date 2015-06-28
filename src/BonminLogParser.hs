@@ -46,7 +46,8 @@ instance C.ToField SolverReturn where
 
 instance C.ToRecord SolverReturn
 instance C.ToRecord BonminResults
-
+instance C.ToNamedRecord BonminResults
+instance C.DefaultOrdered BonminResults
 
 
 prefixParser :: Parser ()
